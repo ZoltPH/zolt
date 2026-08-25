@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Zolt PH — Cursor Plugin Install &amp; Activation Guide</title>
+<meta name="description" content="Step-by-step guide to install, activate, and troubleshoot the Zolt PH Cursor plugin on Windows, macOS and Linux." />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%2300d4aa'/><text x='50%25' y='58%25' text-anchor='middle' font-family='Inter,system-ui' font-size='38' font-weight='800' fill='%230b0d12'>Z</text></svg>" />
+<style>
+  /* ---------- design tokens ---------- */
+  :root{
+    --bg:#0b0d12;
+    --bg-2:#101319;
+    --panel:#151922;
+    --panel-2:#1c2230;
+    --line:#252b3a;
+    --text:#e8ecf4;
+    --muted:#9aa3b6;
+    --dim:#6b7385;
+    --brand:#00d4aa;
+    --brand-2:#19f0c4;
+    --brand-soft:rgba(0,212,170,.12);
+    --warn:#ffb454;
+    --danger:#ff5d6c;
+    --info:#7c9cff;
+    --code:#0a0d14;
+    --code-line:#1a2030;
+    --shadow:0 30px 80px -30px rgba(0,0,0,.6), 0 1px 0 rgba(255,255,255,.04) inset;
+    --radius:14px;
+    --maxw:1180px;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+    font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 20% -10%, rgba(0,212,170,.10), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(124,156,255,.08), transparent 55%),
+      var(--bg);
+    min-height:100vh;
+  }
+  img{max-width:100%;height:auto;display:block}
+  a{color:var(--brand-2);text-decoration:none;border-bottom:1px dashed rgba(25,240,196,.35)}
+  a:hover{border-bottom-color:var(--brand-2)}
+  ::selection{background:rgba(0,212,170,.35);color:#fff}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  main{padding-bottom:120px}
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:sticky;top:0;z-index:30;
+    backdrop-filter:saturate(160%) blur(10px);
+    background:rgba(11,13,18,.72);
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .nav-inner{display:flex;align-items:center;gap:18px;padding:14px 28px;max-width:var(--maxw);margin:0 auto}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+  .logo{
+    width:34px;height:34px;border-radius:9px;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--brand) 0%,var(--brand-2) 100%);
+    color:#08110f;font-weight:900;box-shadow:0 6px 18px -6px rgba(0,212,170,.5);
+  }
+  .brand small{display:block;color:var(--muted);font-weight:500;font-size:12px;letter-spacing:.3px;margin-top:1px}
+  .nav-links{display:flex;gap:6px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links a{
+    color:var(--muted);font-size:14px;padding:7px 12px;border-radius:999px;
+    border:1px solid transparent;white-space:nowrap;
+  }
+  .nav-links a:hover{color:var(--text);background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.06);border-bottom:1px solid transparent}
+
+  /* ---------- hero ---------- */
+  .hero{padding:88px 0 56px;position:relative;overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:start}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;
+    background:var(--brand-soft);color:var(--brand-2);
+    font-size:12.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;
+    border:1px solid rgba(0,212,170,.25);
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 4px rgba(0,212,170,.18)}
+  h1{
+    font-size:clamp(36px,5vw,56px);line-height:1.05;letter-spacing:-1.2px;
+    margin:18px 0 14px;font-weight:800;
+    background:linear-gradient(180deg,#fff 0%,#c9d1e0 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lede{font-size:18.5px;color:var(--muted);max-width:60ch;margin:0 0 26px}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;padding:12px 18px;border-radius:12px;
+    font-weight:600;font-size:14.5px;letter-spacing:.1px;border:1px solid transparent;
+    transition:transform .15s ease, background .2s ease, border-color .2s ease;
+    cursor:pointer;
+  }
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:linear-gradient(135deg,var(--brand) 0%,var(--brand-2) 100%);color:#06140f;box-shadow:0 10px 30px -10px rgba(0,212,170,.5)}
+  .btn-ghost{background:rgba(255,255,255,.04);color:var(--text);border-color:rgba(255,255,255,.08)}
+  .btn-ghost:hover{background:rgba(255,255,255,.07)}
+
+  .hero-card{
+    background:linear-gradient(180deg,var(--panel) 0%,var(--panel-2) 100%);
+    border:1px solid var(--line);border-radius:var(--radius);padding:22px;
+    box-shadow:var(--shadow);position:relative;
+  }
+  .hero-card::before{
+    content:"";position:absolute;inset:-1px;border-radius:var(--radius);
+    background:linear-gradient(180deg,rgba(0,212,170,.5),transparent 35%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;padding:1px;pointer-events:none;
+  }
+  .hero-card h3{margin:0 0 14px;font-size:14px;letter-spacing:.4px;color:var(--muted);text-transform:uppercase}
+  .hero-card ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+  .hero-card li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:var(--text)}
+  .hero-card li .check{
+    flex:0 0 20px;width:20px;height:20px;border-radius:6px;background:rgba(0,212,170,.15);
+    color:var(--brand);display:grid;place-items:center;font-size:12px;font-weight:800;margin-top:2px;
+  }
+
+  /* ---------- section ---------- */
+  section{padding:64px 0;scroll-margin-top:84px}
+  .section-head{display:flex;align-items:baseline;gap:18px;margin-bottom:28px;flex-wrap:wrap}
+  .section-head h2{
+    font-size:30px;letter-spacing:-.4px;margin:0;font-weight:800;
+    background:linear-gradient(180deg,#fff 0%,#bcc4d6 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .section-head .kicker{color:var(--brand);font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase}
+  .section-head .lead{color:var(--muted);margin:6px 0 0;max-width:70ch}
+
+  /* ---------- warning banner ---------- */
+  .banner{
+    border:1px solid rgba(255,180,84,.35);background:linear-gradient(180deg,rgba(255,180,84,.08),rgba(255,180,84,.02));
+    padding:18px 20px;border-radius:var(--radius);margin:18px 0 32px;
+    display:flex;gap:14px;align-items:flex-start;
+  }
+  .banner .icon{
+    flex:0 0 36px;height:36px;border-radius:10px;display:grid;place-items:center;
+    background:rgba(255,180,84,.15);color:var(--warn);font-weight:900;
+  }
+  .banner h4{margin:0 0 4px;font-size:15px;color:#ffd58f}
+  .banner p{margin:0;color:var(--muted);font-size:14.5px}
+
+  /* ---------- step list ---------- */
+  .steps{display:grid;gap:22px;counter-reset:step}
+  .step{
+    background:linear-gradient(180deg,var(--panel) 0%,var(--bg-2) 100%);
+    border:1px solid var(--line);border-radius:var(--radius);padding:24px;
+    box-shadow:var(--shadow);position:relative;overflow:hidden;
+  }
+  .step-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+  .step-num{
+    width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--brand) 0%,var(--brand-2) 100%);
+    color:#06140f;font-weight:900;font-size:16px;flex:0 0 38px;
+    box-shadow:0 8px 24px -8px rgba(0,212,170,.5);
+  }
+  .step h3{margin:0;font-size:20px;font-weight:700}
+  .step h3 .sub{color:var(--muted);font-weight:500;font-size:14px;margin-left:8px}
+  .step p{margin:8px 0 14px;color:var(--muted)}
+  .step ul{padding-left:20px;margin:8px 0 14px;color:var(--text)}
+  .step ul li{margin:6px 0}
+  .step .kbd-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0 14px}
+
+  /* ---------- "what you'll see" visual description ---------- */
+  .visual{
+    border:1px dashed var(--line);border-radius:12px;padding:16px 18px;
+    background:rgba(255,255,255,.02);margin:14px 0;
+    font-size:14px;color:var(--muted);position:relative;
+  }
+  .visual::before{
+    content:"WHAT YOU'LL SEE";position:absolute;top:-9px;left:14px;
+    background:var(--bg-2);padding:0 8px;font-size:11px;letter-spacing:1.2px;
+    color:var(--brand-2);font-weight:700;
+  }
+  .visual strong{color:var(--text)}
+  .visual code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:5px;color:#e8ecf4}
+  .visual .marker{
+    display:inline-block;padding:1px 7px;border-radius:4px;background:rgba(255,93,108,.18);
+    color:#ff8a93;border:1px solid rgba(255,93,108,.4);font-weight:600;font-size:12.5px;
+  }
+
+  /* ---------- code/keyboard ---------- */
+  code,kbd,samp{font-family:"JetBrains Mono",SFMono-Regular,Menlo,Consolas,monospace;font-size:13.5px}
+  kbd{
+    display:inline-block;padding:3px 8px;border-radius:6px;border:1px solid var(--line);
+    background:linear-gradient(180deg,#222936,#171c26);color:#e8ecf4;
+    box-shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 1px 2px rgba(0,0,0,.5);
+    min-width:22px;text-align:center;font-size:12.5px;font-weight:600;
+  }
+  .kbd-row .plus{color:var(--dim);font-weight:600;font-size:14px}
+  pre{
+    background:var(--code);border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;overflow-x:auto;margin:10px 0 16px;position:relative;
+  }
+  pre code{color:#d7e1f0;font-size:13.5px;line-height:1.7;display:block;white-space:pre}
+  pre .c-cmd{color:#7c9cff}
+  pre .c-com{color:#6b7385;font-style:italic}
+  pre .c-str{color:#9be3b3}
+  .copy{
+    position:absolute;top:8px;right:8px;background:rgba(255,255,255,.06);
+    color:var(--muted);border:1px solid var(--line);border-radius:8px;
+    padding:5px 10px;font-size:12px;font-weight:600;cursor:pointer;
+  }
+  .copy:hover{background:rgba(255,255,255,.1);color:var(--text)}
+
+  /* ---------- callout ---------- */
+  .callout{
+    border:1px solid var(--line);border-radius:12px;padding:14px 16px;
+    background:rgba(124,156,255,.06);color:#cbd6f0;font-size:14.5px;margin:14px 0;
+    display:flex;gap:12px;align-items:flex-start;
+  }
+  .callout .ic{flex:0 0 22px;color:var(--info);font-weight:900;margin-top:2px}
+  .callout.warn{background:rgba(255,180,84,.06);border-color:rgba(255,180,84,.25);color:#ffe2b9}
+  .callout.warn .ic{color:var(--warn)}
+  .callout.danger{background:rgba(255,93,108,.06);border-color:rgba(255,93,108,.25);color:#ffd0d4}
+  .callout.danger .ic{color:var(--danger)}
+  .callout.brand{background:var(--brand-soft);border-color:rgba(0,212,170,.25);color:#c6fff0}
+  .callout.brand .ic{color:var(--brand-2)}
+
+  /* ---------- version table ---------- */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .card{
+    background:linear-gradient(180deg,var(--panel) 0%,var(--bg-2) 100%);
+    border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);
+  }
+  .card h4{margin:0 0 8px;font-size:15px;letter-spacing:.3px;color:var(--brand-2);text-transform:uppercase}
+  .card p{margin:0;color:var(--muted);font-size:14.5px}
+
+  /* ---------- platform tabs ---------- */
+  .tabs{display:flex;gap:8px;margin:6px 0 18px;flex-wrap:wrap}
+  .tab{
+    padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);color:var(--muted);font-weight:600;font-size:13.5px;
+    cursor:pointer;user-select:none;
+  }
+  .tab.active{background:var(--brand-soft);border-color:rgba(0,212,170,.4);color:var(--brand-2)}
+  .panel{display:none}
+  .panel.active{display:block}
+
+  /* ---------- fix / FAQ ---------- */
+  .faq{display:grid;gap:14px}
+  details{
+    background:linear-gradient(180deg,var(--panel) 0%,var(--bg-2) 100%);
+    border:1px solid var(--line);border-radius:12px;padding:0;overflow:hidden;
+  }
+  details summary{
+    cursor:pointer;padding:16px 20px;font-weight:700;font-size:15.5px;color:var(--text);
+    list-style:none;display:flex;align-items:center;gap:14px;
+  }
+  details summary::-webkit-details-marker{display:none}
+  details summary::after{
+    content:"";flex:0 0 10px;width:10px;height:10px;border-right:2px solid var(--brand);
+    border-bottom:2px solid var(--brand);transform:rotate(45deg);margin-left:auto;transition:transform .2s ease;
+  }
+  details[open] summary::after{transform:rotate(-135deg)}
+  details .faq-body{padding:0 20px 20px;color:var(--muted);font-size:14.5px}
+  details .faq-body p{margin:8px 0}
+  details .faq-body h5{margin:14px 0 6px;color:var(--brand-2);font-size:13.5px;text-transform:uppercase;letter-spacing:.5px}
+  details .faq-body ol{padding-left:20px;margin:8px 0}
+  details .faq-body ol li{margin:6px 0}
+
+  /* ---------- pillars ---------- */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+  .pillar{
+    background:linear-gradient(180deg,var(--panel) 0%,var(--bg-2) 100%);
+    border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);
+  }
+  .pillar .num{
+    width:32px;height:32px;border-radius:9px;display:grid;place-items:center;
+    background:rgba(0,212,170,.15);color:var(--brand-2);font-weight:900;margin-bottom:12px;
+  }
+  .pillar h4{margin:0 0 6px;font-size:15px}
+  .pillar p{margin:0;color:var(--muted);font-size:14px}
+
+  /* ---------- footer ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:36px 0;color:var(--dim);font-size:13.5px;text-align:center;
+  }
+  footer a{color:var(--muted);border-bottom-color:rgba(154,163,182,.3)}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:900px){
+    .hero{padding:48px 0 24px}
+    .hero-grid,.grid-2,.pillars{grid-template-columns:1fr;gap:32px}
+    .nav-links{display:none}
+    h1{font-size:38px}
+    .section-head h2{font-size:24px}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <div class="logo">Z</div>
+      <div>
+        <div>Zolt PH</div>
+        <small>Cursor Plugin Guide</small>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#before-you-start">Before you start</a>
+      <a href="#version">Version</a>
+      <a href="#install">Install</a>
+      <a href="#activate">Activate</a>
+      <a href="#linux">Linux</a>
+      <a href="#chat-fix">Chat language</a>
+      <a href="#troubleshoot">Troubleshoot</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span> Official guide · extension 2.9.x</span>
+      <h1>Install the Cursor plugin<br/>right — only once.</h1>
+      <p class="lede">
+        A visual, step-by-step walkthrough for installing, activating, and troubleshooting
+        the Zolt PH plugin on Windows, macOS, and Linux — with detailed descriptions
+        of every screen and menu so you never have to guess.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#install">Start installing →</a>
+        <a class="btn btn-ghost" href="#troubleshoot">Stuck? Jump to fixes</a>
+      </div>
+    </div>
+
+    <aside class="hero-card" aria-label="Support">
+      <h3>📞 Technical support</h3>
+      <ul>
+        <li><span class="check">✓</span><span><strong>Online hours:</strong> 09:00 – 22:00 (daily)</span></li>
+        <li><span class="check">✓</span><span>The plugin runs <strong>inside Cursor</strong> — no extra software needed</span></li>
+        <li><span class="check">✓</span><span>Free of magic, no key rotation, Tab supported, HTTP/2 supported</span></li>
+        <li><span class="check">✓</span><span>Compatible with Windows · macOS · Linux — no security impact</span></li>
+      </ul>
+      <div class="visual">
+        <p>The plugin ships with a small <strong>welcome panel</strong> that opens automatically the first time you launch Cursor after install. It's a floating card with five circular buttons in a row:</p>
+        <p style="margin:6px 0">
+          <strong>🛟 Support</strong> &nbsp;·&nbsp; <strong>🖥️ Editor</strong> &nbsp;·&nbsp; <strong>💬 Chat</strong> &nbsp;·&nbsp; <strong>📁 Files</strong> &nbsp;·&nbsp; <strong>⚙️ Settings</strong>
+        </p>
+        <p>The <span class="marker">first button</span> — Support — is where the live customer-service panel lives. Clicking it opens a wider card that shows the daily support window <code>Customer Service 09-22h</code> at the top, plus quick links to contact options and self-serve shortcuts. The card uses a teal accent that matches the Zolt brand.</p>
+        <p style="margin:0">You can also reach this panel from <strong>Cursor Settings</strong>, where a small tooltip next to the customer-service entry repeats the hours.</p>
+      </div>
+    </aside>
+  </div>
+</header>
+
+<main>
+
+<!-- ============== BEFORE YOU START ============== -->
+<section id="before-you-start">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Step 0</div>
+      <h2>Read this first — save 90% of your time</h2>
+      <p class="lead">Most install failures come from one of two things: an outdated Cursor, or missing admin rights. Skipping this section is the #1 reason the plugin won't activate.</p>
+    </div>
+
+    <div class="banner">
+      <div class="icon">!</div>
+      <div>
+        <h4>Important — don't run multiple agents at once</h4>
+        <p>The upstream server is tightening its API-key monitoring. If you run <strong>2–3 Cursor agents in parallel</strong> on the same prompt, your key will be detected quickly, hit its daily quota, and in severe cases the key may be <strong>locked and your device blocked</strong>. Locked keys cannot be restored. Use one agent per session.</p>
+      </div>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="num">1</div>
+        <h4>Cursor is new — install normally</h4>
+        <p>First time installing Cursor? Skip this warning. Install it like any other app.</p>
+      </div>
+      <div class="pillar">
+        <div class="num">2</div>
+        <h4>Cursor is old — uninstall first, then reinstall</h4>
+        <p>If you already have an old Cursor, <strong>uninstall it first</strong> — don't install over it. This avoids 99% of errors.</p>
+      </div>
+      <div class="pillar">
+        <div class="num">3</div>
+        <h4>Install into the default folder</h4>
+        <p>macOS: <code>/Applications</code>. Windows: <code>C:\Users\&lt;you&gt;\AppData\Local\Programs</code>. Other folders need manual permissions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== VERSION ============== -->
+<section id="version">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Step 1</div>
+      <h2>Pick the right version</h2>
+      <p class="lead">Cursor 3.0 changed the UI significantly, so the extension ships in two tracks. Match the track to your Cursor version and activation is smooth.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h4>Extension 2.8.x → Cursor 3.9 – 3.14</h4>
+        <p>Download Cursor 3.9 through 3.14 from the official site. Windows: pick <strong>System x64</strong>. macOS: pick <strong>Mac Universal</strong>. Linux: pick <strong>.AppImage</strong>.</p>
+      </div>
+      <div class="card">
+        <h4>Extension 2.9.x → Cursor 3.15 and above</h4>
+        <p>The latest line, fully compatible with the Agents Window and modern Cursor builds. Recommended if you're installing fresh.</p>
+      </div>
+    </div>
+
+    <div class="callout brand" style="margin-top:24px">
+      <div class="ic">i</div>
+      <div>
+        Not sure which Cursor version you have? Open Cursor → <strong>About</strong> (macOS: <kbd>Cmd</kbd>+<kbd>,</kbd> → About). Or <strong>Help → About</strong> on Windows / Linux.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== INSTALL ============== -->
+<section id="install">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Step 2</div>
+      <h2>Install the plugin into Cursor</h2>
+      <p class="lead">Three sub-steps and you're done. Open Cursor with admin rights first — without them, the extension can't write the patches it needs.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <div class="step-num">A</div>
+        <h3>Switch back to the classic Editor view <span class="sub">(required from Cursor 3.0)</span></h3>
+      </div>
+      <p>Cursor 3.0 introduces the <strong>Agents Window</strong> — the plugin <em>cannot</em> be installed from inside it. Switch back to the classic Editor using any of these:</p>
+      <ul>
+        <li>Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd> (Windows / Linux) or <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd> (macOS)</li>
+        <li>Click the <strong>Editor</strong> icon in the top-right corner</li>
+        <li>Open the menu <strong>File → Open Editor Window</strong></li>
+      </ul>
+      <div class="callout">
+        <div class="ic">i</div>
+        <div>Once the plugin is installed, you can switch back to the Agents Window if you prefer. The plugin only can't be <em>installed</em> there.</div>
+      </div>
+      <div class="visual">
+        The same five-button welcome panel from the hero appears here too, this time with a small <strong>overlay</strong> in the top-right corner pointing at an <span class="marker">Editor icon</span>. The overlay reads something like <em>"Click here to switch back to the classic Editor view"</em>. After you click, the window reloads into the familiar Cursor editor — sidebar on the left, file tree, tabs along the top. From here you can install extensions normally.
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <div class="step-num">B</div>
+        <h3>Open Cursor as Admin <span class="sub">⚠️ important</span></h3>
+      </div>
+      <p>The plugin needs to write into Cursor's system directory to apply the patch. Without permission, create / edit / backup operations will fail silently.</p>
+      <div class="tabs" data-tabs="admin">
+        <div class="tab active" data-target="admin-win">🪟 Windows</div>
+        <div class="tab" data-target="admin-mac">🍎 macOS</div>
+        <div class="tab" data-target="admin-lin">🐧 Linux</div>
+      </div>
+      <div class="panel active" id="admin-win">
+        <ol>
+          <li>Install Cursor normally (done in the previous step).</li>
+          <li><strong>Right-click</strong> the Cursor icon on your desktop or Start Menu.</li>
+          <li>Choose <strong>Run as administrator</strong> → confirm <code>Yes</code> at the UAC prompt.</li>
+        </ol>
+        <div class="visual">
+          When you right-click the Cursor icon, a context menu drops down with the usual Windows entries — <strong>Open</strong>, <strong>Open file location</strong>, <strong>Pin to Start</strong>, <strong>Properties</strong>, etc. The entry you want — <span class="marker">Run as administrator</span> — sits near the bottom of that menu, just above <em>Properties</em>. Clicking it triggers the standard Windows UAC dialog: a small blue-and-yellow window asking <em>"Do you want to allow this app to make changes to your device?"</em> with a Cursor icon. Press <strong>Yes</strong> and Cursor launches with full write access to its own install folder.
+        </div>
+      </div>
+      <div class="panel" id="admin-mac">
+        <ol>
+          <li>Open <strong>Terminal</strong> (Applications → Utilities → Terminal).</li>
+          <li>Run the following to launch Cursor as root:</li>
+        </ol>
+<pre><button class="copy" data-copy>copy</button><code><span class="c-com"># Open Cursor with root privileges</span>
+<span class="c-cmd">sudo</span> /Applications/Cursor.app/Contents/MacOS/Cursor</code></pre>
+        <div class="callout warn">
+          <div class="ic">!</div>
+          <div>If you still see "permission denied", open Terminal via <strong>Right-click → Open → Open</strong> (override Gatekeeper on first launch).</div>
+        </div>
+      </div>
+      <div class="panel" id="admin-lin">
+        <p>Run the following from a terminal opened with <code>sudo</code> or as the root user.</p>
+<pre><button class="copy" data-copy>copy</button><code><span class="c-com"># Open Cursor as root on Linux</span>
+<span class="c-cmd">sudo</span> -i
+/path/to/cursor.AppImage --appimage-extract-and-run --no-sandbox</code></pre>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <div class="step-num">C</div>
+        <h3>Install the extension from a <code>.vsix</code> file</h3>
+      </div>
+      <p>The plugin ships as a <code>.vsix</code> file. Install it directly (not via the Marketplace).</p>
+      <div class="kbd-row">
+        <span>Press</span>
+        <kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>P</kbd>
+        <span>to open the Command Palette, then type</span>
+        <code>VSIX</code>
+      </div>
+      <ol>
+        <li>Pick <strong>Extensions: Install from VSIX…</strong> from the list.</li>
+        <li>Browse to the <code>.vsix</code> file you downloaded → click <strong>Open / Install</strong>.</li>
+        <li>Wait for Cursor to show "Completed Installing" — the extension appears in the Extensions sidebar.</li>
+      </ol>
+      <div class="visual">
+        <p><strong>Command Palette view</strong> — A wide text input drops down from the top-center of the window with the placeholder <em>"Type a command to run"</em>. Once you type <code>VSIX</code>, three matching commands appear below the input. The first one — <span class="marker">Extensions: Install from VSIX…</span> — is highlighted as the top match (slight blue background, the file-extension icon to its left).</p>
+        <p style="margin:10px 0 0"><strong>File picker view</strong> — Picking that command opens a standard Windows <em>"Open"</em> dialog. The current folder is <code>Downloads</code>. Inside the file list you'll see your <code>.vsix</code> file — clicking it highlights it blue and populates the <em>File name</em> field at the bottom with its full path. The action button at the bottom-right reads <span class="marker">Open</span>; click it and Cursor begins the install, then briefly shows a small loading spinner in the bottom-right corner.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== ACTIVATE ============== -->
+<section id="activate">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Step 3</div>
+      <h2>Activate with your key</h2>
+      <p class="lead">After install, open the extension from the sidebar and paste the key you received from Zolt PH.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <div class="step-num">1</div>
+        <h3>Open the extension</h3>
+      </div>
+      <p>In the <strong>Activity Bar on the left</strong>, click the <strong>Zolt PH</strong> icon (the Z-on-teal logo that appears once the extension is installed).</p>
+      <div class="visual">
+        Cursor's left Activity Bar is a thin vertical strip holding icons for Explorer, Search, Source Control, Run &amp; Debug, and Extensions. After install, a new icon appears in that strip — <span class="marker">a yellow "Z" on a dark square</span> (Zolt PH's logo). A small hover tooltip says <em>"Zolt PH"</em>. Clicking it opens the Zolt PH side panel docked on the right edge of the editor, taking up roughly a third of the window width.
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <div class="step-num">2</div>
+        <h3>Paste the key and click Activate</h3>
+      </div>
+      <ol>
+        <li>Paste the <strong>key</strong> you received from Zolt PH into the input field.</li>
+        <li>Click the <strong>Activate</strong> button.</li>
+        <li>Wait a few seconds — the extension switches to the activated state.</li>
+      </ol>
+      <div class="visual">
+        <p><strong>Empty state</strong> — The panel header reads <code>Zolt PH</code> in white, with a small yellow Z logo to its left. Below the header is a single dark input field with the placeholder <em>"Enter your key…"</em>. Underneath, a wide button labelled <span class="marker">Activate</span> sits greyed out until a key is pasted.</p>
+        <p style="margin:10px 0 0"><strong>Filled state</strong> — Once you paste the key, the input field shows it as masked dots (••••••••••••) and the <span class="marker">Activate</span> button turns teal, ready to click. Press it and within 2–3 seconds the panel refreshes into the activated state.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <div class="step-num">3</div>
+        <h3>Confirm success</h3>
+      </div>
+      <p>On success, the panel shows an "active" status together with the expiry date. You can now close Cursor and reopen it normally — the plugin stays active.</p>
+      <div class="visual">
+        The panel switches to a confirmation state: a green check-circle icon at the top, the word <span class="marker">Active</span> in teal, and a one-line meta line reading <em>"Expires: YYYY-MM-DD"</em>. The input field collapses and a smaller secondary button labelled <em>"Deactivate"</em> appears below the meta line, in case you ever need to sign out.
+      </div>
+      <div class="callout brand">
+        <div class="ic">✓</div>
+        <div>All done! You can switch back to the Agents Window and use Cursor as normal — the plugin stays active in the background.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== LINUX ============== -->
+<section id="linux">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Appendix</div>
+      <h2>Install Cursor on Linux (AppImage)</h2>
+      <p class="lead">If you're on Linux, here's how to install Cursor from a <code>.AppImage</code> without a package manager.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <div class="step-num">1</div>
+        <h3>Change to your Downloads folder</h3>
+      </div>
+<pre><button class="copy" data-copy>copy</button><code><span class="c-cmd">cd</span> ~/Downloads</code></pre>
+
+      <div class="step-head" style="margin-top:24px">
+        <div class="step-num">2</div>
+        <h3>Make the AppImage executable</h3>
+      </div>
+<pre><button class="copy" data-copy>copy</button><code><span class="c-cmd">chmod</span> +x Cursor-2.6.11-x86_64.AppImage</code></pre>
+
+      <div class="step-head" style="margin-top:24px">
+        <div class="step-num">3</div>
+        <h3>Run Cursor (the safe way)</h3>
+      </div>
+<pre><button class="copy" data-copy>copy</button><code><span class="c-com"># --appimage-extract-and-run : run without FUSE
+# --no-sandbox            : disable Chromium sandbox (avoids permission errors on some distros)</span>
+<span class="c-cmd">./</span>Cursor-2.6.11-x86_64.AppImage --appimage-extract-and-run --no-sandbox</code></pre>
+      <div class="callout">
+        <div class="ic">i</div>
+        <div>Replace <code>Cursor-2.6.11-x86_64.AppImage</code> with the exact filename you downloaded. Use <kbd>Tab</kbd> to autocomplete.</div>
+      </div>
+      <div class="visual">
+        Picture this: a Linux desktop with two windows side-by-side. On the left, the <strong>Files</strong> (Nautilus) window showing the <code>Downloads</code> folder, with a single file inside — <code>Cursor-2.6.11-x86_64.AppImage</code> — selected in blue. On the right, a <strong>GNOME Terminal</strong> window showing two lines of history: <code>chmod +x Cursor-2.6.11-x86_64.AppImage</code> (which printed <code>chmod: changing permissions of 'Cursor-2.6.11-x86_64.AppImage': Operation not permitted</code> until run with <code>sudo</code>), then <code>./Cursor-2.6.11-x86_64.AppImage --appimage-extract-and-run --no-sandbox</code> which begins launching Cursor — a small splash screen briefly appears with the Cursor logo, then the main editor window opens. Replace the version number with whatever your downloaded file actually says.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CHAT LANGUAGE FIX ============== -->
+<section id="chat-fix">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Tip</div>
+      <h2>Fix Cursor replying in the wrong language</h2>
+      <p class="lead">If the Agent replies in a language you didn't ask for, add a <strong>Project Rule</strong> to force the language you want.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <div class="step-num">1</div>
+        <h3>Open Rules and Commands</h3>
+      </div>
+      <p>Go to <strong>Cursor Settings → Rules and Commands</strong>.</p>
+
+      <div class="step-head" style="margin-top:18px">
+        <div class="step-num">2</div>
+        <h3>Create a Project Rule</h3>
+      </div>
+      <p>In the <strong>Rules</strong> section, click <strong>New → Project rules</strong>.</p>
+      <div class="visual">
+        In the Settings page, scroll to the <em>Rules</em> section header. On its right edge sits a button labelled <span class="marker">New</span> with a small downward chevron — clicking it opens a slim dropdown menu listing three options. The second option — <span class="marker">Project rules</span> — is what you want; picking it scopes the rule to the current project only (instead of all your projects). A red marker overlay in the docs highlights this exact entry.
+      </div>
+
+      <div class="step-head" style="margin-top:18px">
+        <div class="step-num">3</div>
+        <h3>Name it and write the rule</h3>
+      </div>
+      <p>Give it a name (e.g. <code>language-en</code>) and paste the rule below:</p>
+<pre><button class="copy" data-copy>copy</button><code>Always respond in English. Match the user's input language only when explicitly asked; otherwise default to English for code comments and explanations.</code></pre>
+      <div class="visual">
+        <p><strong>Editor view</strong> — The rule editor is a two-field form. The top field is a small single-line input where you type the rule's name (<code>language-en</code> in this case). Below it is a larger multi-line text area with a slight monospace feel — paste your rule text here. A character count sits in the bottom-right corner of the textarea. Hit <kbd>⌘</kbd>+<kbd>S</kbd> / <kbd>Ctrl</kbd>+<kbd>S</kbd> to save; the editor collapses back into the list.</p>
+        <p style="margin:10px 0 0"><strong>List view</strong> — Back in <em>Settings → Rules and Commands</em>, the new <code>language-en</code> rule now appears at the top of the Rules list with a small teal <span class="marker">Active</span> badge on its right. Pre-existing rules (if any) sit below it, each with their own toggle and edit pencil.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TROUBLESHOOT ============== -->
+<section id="troubleshoot">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Troubleshooting</div>
+      <h2>When something doesn't work</h2>
+      <p class="lead">Try the three steps below in order. In most cases, one of them will fix the problem.</p>
+    </div>
+
+    <div class="callout warn" style="margin-bottom:24px">
+      <div class="ic">!</div>
+      <div>
+        <strong>The "99% fix" — try these in order:</strong>
+        <ol style="margin:8px 0 0;padding-left:22px">
+          <li>Quit Cursor completely and reopen it.</li>
+          <li>Still broken? Open Cursor as Admin (revisit Step 2).</li>
+          <li>Still broken? <strong>Uninstall and reinstall Cursor</strong> into the default folder.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="faq">
+      <details open>
+        <summary>Permission denied — can't create / edit / backup files</summary>
+        <div class="faq-body">
+          <p>This happens when Cursor can't write into its install directory or the project folder. The fix depends on your OS:</p>
+
+          <h5>🪟 Windows</h5>
+          <ol>
+            <li><strong>Option 1:</strong> Launch Cursor via <strong>Run as administrator</strong> (see Step 2B).</li>
+            <li><strong>Option 2:</strong> When Cursor prompts "permission denied", click <em>Cancel</em>, quit Cursor completely, then reopen as admin.</li>
+            <li><strong>Option 3:</strong> Uninstall Cursor completely and reinstall into the default folder <code>C:\Users\&lt;you&gt;\AppData\Local\Programs</code>.</li>
+          </ol>
+
+          <h5>🍎 macOS</h5>
+          <ol>
+            <li><strong>Option 1:</strong> Take ownership of Cursor's <code>app</code> folder:</li>
+          </ol>
+<pre><button class="copy" data-copy>copy</button><code><span class="c-com"># Change ownership to the current user</span>
+<span class="c-cmd">sudo</span> chown -R <span class="c-str">`whoami`</span> /Applications/Cursor.app/Contents/Resources/app</code></pre>
+          <ol start="2">
+            <li><strong>Option 2:</strong> Launch Cursor directly from Terminal as root:</li>
+          </ol>
+<pre><button class="copy" data-copy>copy</button><code><span class="c-cmd">sudo</span> /Applications/Cursor.app/Contents/MacOS/Cursor</code></pre>
+          <p>If it still errors, open Terminal via <strong>Right-click → Open → Open</strong> to bypass Gatekeeper.</p>
+
+          <h5>🐧 Ubuntu / Linux</h5>
+          <ol>
+            <li>Change ownership of the install directory:</li>
+          </ol>
+<pre><button class="copy" data-copy>copy</button><code><span class="c-com"># Replace /opt/cursor with the actual path on your system</span>
+<span class="c-cmd">sudo</span> chown -R <span class="c-str">`whoami`</span> /opt/cursor</code></pre>
+          <ol start="2">
+            <li>Or run the AppImage directly (see the Linux section above).</li>
+          </ol>
+        </div>
+      </details>
+
+      <details>
+        <summary>Webview failed to load — blank screen / hang</summary>
+        <div class="faq-body">
+          <p>This is caused by a corrupted webview cache. Clear it and restart:</p>
+
+          <h5>Method 1 — Task Manager</h5>
+          <ol>
+            <li>Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Esc</kbd> to open <strong>Task Manager</strong>.</li>
+            <li>Find and <strong>End task</strong> any processes named <code>Cursor</code>.</li>
+            <li>Reopen Cursor.</li>
+          </ol>
+
+          <h5>Method 2 — Clear Service Worker cache</h5>
+          <ol>
+            <li>Quit Cursor completely.</li>
+            <li>Press <kbd>Win</kbd>+<kbd>R</kbd>, type <code>%APPDATA%\Cursor\Service Worker</code> → Enter.</li>
+            <li>A File Explorer window opens — <strong>delete the entire Service Worker folder</strong> inside.</li>
+            <li>Reopen Cursor.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details>
+        <summary>Zolt PH icon missing from the sidebar</summary>
+        <div class="faq-body">
+          <p>After install, the icon can be hidden by another view. Bring it back:</p>
+          <ol>
+            <li>Right-click the <strong>Activity Bar</strong> (the vertical strip on the left).</li>
+            <li>Untick <em>Compact Menu</em> if it's enabled.</li>
+            <li>Or go to <strong>View → Appearance → Activity Bar Position</strong> to restore the default position.</li>
+          </ol>
+          <p>If it still doesn't show, open the <strong>Extensions</strong> panel (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd>), find <em>Zolt PH</em> in the list, and click <strong>Reload</strong>.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Key is valid but the plugin says "activation failed"</summary>
+        <div class="faq-body">
+          <p>Common causes:</p>
+          <ul>
+            <li>Your system clock is significantly off. Check <em>Date &amp; Time</em> in Settings.</li>
+            <li>A VPN or proxy is blocking the activation endpoint. Disable it for a minute and try again.</li>
+            <li>The key has already been used on another machine. Message admin with a screenshot to request a replacement.</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============== STILL STUCK ============== -->
+<section>
+  <div class="wrap">
+    <div class="card" style="text-align:center;padding:36px 22px">
+      <h4 style="margin-bottom:10px">Still stuck?</h4>
+      <p style="max-width:60ch;margin:0 auto 18px">Message admin on Telegram with a screenshot of the error and your Cursor version (<strong>Help → About</strong>). Support hours: <strong>09:00 – 22:00</strong>, daily.</p>
+      <a class="btn btn-primary" href="https://t.me/ZoltXBot" target="_blank" rel="noopener">Contact Zolt PH ↗</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    © Zolt PH · This guide is for Zolt PH customers. Please do not share your key externally.
+  </div>
+</footer>
+
+<script>
+  // Tab switching
+  document.querySelectorAll('[data-tabs]').forEach(group => {
+    const tabs = group.querySelectorAll('.tab');
+    const root = group.closest('.step') || group.parentElement;
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const target = tab.dataset.target;
+        root.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        const panel = root.querySelector('#' + target);
+        if (panel) panel.classList.add('active');
+      });
+    });
+  });
+
+  // Copy code buttons
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const code = btn.parentElement.querySelector('code');
+      try {
+        await navigator.clipboard.writeText(code.innerText);
+        const original = btn.textContent;
+        btn.textContent = 'copied ✓';
+        setTimeout(() => btn.textContent = original, 1500);
+      } catch (e) {
+        btn.textContent = 'press Ctrl+C';
+        setTimeout(() => btn.textContent = 'copy', 1500);
+      }
+    });
+  });
+
+  // Smooth scroll for in-page anchors
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id.length > 1) {
+        const el = document.querySelector(id);
+        if (el) {
+          e.preventDefault();
+          el.scrollIntoView({behavior: 'smooth', block: 'start'});
+          history.replaceState(null, '', id);
+        }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
