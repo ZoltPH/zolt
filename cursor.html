@@ -277,6 +277,48 @@
   .pillar h4{margin:0 0 6px;font-size:15px}
   .pillar p{margin:0;color:var(--muted);font-size:14px}
 
+  /* ---------- product info section ---------- */
+  .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px}
+  .product-card{
+    background:linear-gradient(180deg,var(--panel) 0%,var(--bg-2) 100%);
+    border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;
+    box-shadow:var(--shadow);
+  }
+  .product-card h4{margin:0 0 10px;font-size:15px;font-weight:700;color:var(--brand-2);letter-spacing:.2px}
+  .product-card ul{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+  .product-card li{
+    display:block;padding-left:18px;position:relative;
+    font-size:14.5px;color:var(--muted);line-height:1.55;
+  }
+  .product-card li::before{content:"·";position:absolute;left:0;color:var(--brand);font-size:18px;line-height:1.45}
+  .product-card li strong{display:inline;font-weight:600;color:var(--text)}
+  .product-card li em{display:inline;font-style:normal;font-weight:600;color:#ffb454}
+  .product-card li em.red{color:#ff8a93}
+  .product-card li ul{padding-left:12px;margin-top:4px;display:block}
+  .product-card li li{font-size:13.5px;color:var(--muted)}
+  .product-card li li::before{content:"–";left:-2px}
+
+  .compare-table{
+    width:100%;border-collapse:collapse;margin-top:16px;
+    font-size:14px;
+  }
+  .compare-table th{
+    text-align:left;padding:10px 14px;background:var(--panel-2);
+    color:var(--brand-2);font-weight:700;font-size:13px;letter-spacing:.4px;
+    text-transform:uppercase;border-bottom:2px solid var(--brand);
+  }
+  .compare-table td{padding:10px 14px;color:var(--muted);border-bottom:1px solid var(--line);vertical-align:top}
+  .compare-table tr:last-child td{border-bottom:none}
+  .compare-table .plan-name{font-weight:700;color:var(--text);white-space:nowrap}
+  .compare-table .pro{color:#9be3b3;font-weight:600}
+  .compare-table .con{color:#ff8a93;font-weight:400}
+
+  .note-block{
+    background:rgba(255,180,84,.06);border:1px solid rgba(255,180,84,.25);
+    border-radius:12px;padding:14px 16px;margin-top:14px;font-size:14px;color:#ffe2b9;
+  }
+  .note-block strong{color:#ffd58f}
+
   /* ---------- footer ---------- */
   footer{
     border-top:1px solid var(--line);
@@ -306,6 +348,7 @@
       </div>
     </div>
     <div class="nav-links">
+      <a href="#product-info">Plans &amp; policies</a>
       <a href="#before-you-start">Before you start</a>
       <a href="#version">Version</a>
       <a href="#install">Install</a>
@@ -354,6 +397,135 @@
 </header>
 
 <main>
+
+<!-- ============== PRODUCT INFO (policies, plans, caveats) ============== -->
+<section id="product-info">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Must-read</div>
+      <h2>What you're buying &amp; what to expect</h2>
+      <p class="lead">Please read this carefully before purchasing — it covers the product type, warranty terms, plan limits, and how the service actually works.</p>
+    </div>
+
+    <!-- What you are buying -->
+    <div class="product-card" style="margin-bottom:18px">
+      <h4>What you are buying</h4>
+      <ul>
+        <li>This is a <strong>Cursor plugin extension</strong> with an activation key — <em>not</em> a full Cursor Pro account.</li>
+        <li>The plugin is installed directly inside Cursor. After activation it runs in the background while you work.</li>
+        <li>Supported models: <strong>Claude Sonnet Thinking</strong> and <strong>Claude Opus</strong> (plus all other available models, with the two above being the recommended choices).</li>
+        <li>Ready to use immediately after the shop sends you the key — no extra setup required.</li>
+      </ul>
+    </div>
+
+    <div class="grid-2" style="margin-top:16px">
+
+      <!-- Warranty & support -->
+      <div class="product-card">
+        <h4>Warranty &amp; Support</h4>
+        <ul>
+          <li><em class="red">No refunds</em> if you've already received the key and simply changed your mind, don't like it, or didn't read the product description.</li>
+          <li>Keys are delivered once and cannot be recalled — if the key is already in your hands, it's yours.</li>
+          <li><strong>Warranty covers</strong> the product being completely unusable. All other issues are handled as troubleshooting support.</li>
+          <li><strong>Warranty period:</strong> 30 days from purchase. Refunds are proportional to unused days. <em>Example: bought a Monthly Pass at ₱750, used 10 days — refund = ₱500.</em></li>
+          <li>Credit-type keys (e.g. 6500 credits) — only the <strong>unused portion</strong> is refundable. Used 80% of credits? Only 20% of the purchase price is returned.</li>
+          <li><strong>Lifetime keys</strong> are non-refundable, but you'll receive future updates if the plugin is patched.</li>
+          <li>Full setup guide included for new users.</li>
+          <li>Troubleshooting help available during your active usage period.</li>
+          <li>Clear, honest communication — you'll always get a response when you have an issue.</li>
+        </ul>
+      </div>
+
+      <!-- How to receive your key -->
+      <div class="product-card">
+        <h4>How to receive your key</h4>
+        <ul>
+          <li><strong>1.</strong> Complete payment on the shop platform.</li>
+          <li><strong>2.</strong> Inbox the shop with your order number.</li>
+          <li><strong>3.</strong> The shop verifies your order and sends the key along with:
+            <ul style="margin-top:6px;padding-left:14px">
+              <li>The installation tool / plugin file</li>
+              <li>A detailed step-by-step setup guide</li>
+            </ul>
+          </li>
+        </ul>
+        <div class="note-block" style="margin-top:12px">
+          <strong>⏱️ Delivery time:</strong> Keys are sent within <strong>10–90 minutes</strong> after payment. You'll receive the activation tool and a full tutorial alongside the key.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Credit / plan descriptions -->
+    <div class="product-card" style="margin-top:18px">
+      <h4>Plan descriptions — know what you're getting</h4>
+      <ul>
+        <li><strong>200 credits/day</strong> — resets at 8 AM daily. Best for light, casual use (simple Q&amp;A, short prompts). Heavy tasks — editing many documents at once, running long agents — consume credits faster. <em>Example: 10 concurrent requests over 30 minutes can use 10–15 credits in one burst. Basic Q&amp;A is much lighter.</em></li>
+        <li>From 6 PM each evening, an additional 200 credits are added on top of any unused daily balance — up to a <strong>maximum of 400 credits per day</strong>. Credits fully reset at 7 AM the next morning.</li>
+        <li><strong>700 / 1300 / 2600 / 6500 credits (monthly)</strong> — no daily chat limit. Use freely throughout the month until your credit balance runs out.</li>
+        <li><strong>Lifetime plan</strong> — uses the <em>Auto</em> model (approximately GPT-5.2). For heavier tasks the system may fall back to stronger models. You'll need to <strong>create your own account</strong> to use this plan — use Gmail or Hotmail for best results. You may also need to create new accounts as credits run out.</li>
+        <li>Credit cost is calculated based on which model you're using and how long your conversation is.</li>
+      </ul>
+    </div>
+
+    <!-- Known limitations -->
+    <div class="product-card" style="margin-top:18px">
+      <h4>Known limitations — please read before buying</h4>
+      <ul>
+        <li><em>Response speed and intelligence</em> may be 30–40% slower than a genuine Cursor Pro account.</li>
+        <li><em>Not all models</em> are supported — please use the models the shop recommends.</li>
+        <li><em>This is not</em> an official Cursor Pro account from the publisher.</li>
+        <li><em>Performance</em> does not reach 100% of the original — it is a third-party service.</li>
+        <li>Only stable with a <strong>limited set of models</strong>.</li>
+        <li><em class="red">Lifetime plan users</em> must prepare their own email accounts (Hotmail and Gmail recommended) to create accounts for use.</li>
+        <li><em class="red">Lifetime plans carry a risk of being patched</em> — the shop will provide updates if that happens.</li>
+      </ul>
+    </div>
+
+    <!-- Plan comparison table -->
+    <div class="product-card" style="margin-top:18px">
+      <h4>Plan comparison at a glance</h4>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Plan</th>
+            <th>Pros</th>
+            <th>Cons</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="plan-name">200 credits/day<br><span style="color:var(--muted);font-weight:400;font-size:12px">1 · 3 · 7 · 30 days</span></td>
+            <td class="pro">Claude Sonnet &amp; Opus<br>Can use continuously while plan is active</td>
+            <td class="con">~200 credits/day cap</td>
+          </tr>
+          <tr>
+            <td class="plan-name">Fixed credits (700–6500)<br><span style="color:var(--muted);font-weight:400;font-size:12px">Best value · monthly</span></td>
+            <td class="pro">Claude Sonnet &amp; Opus<br>No daily chat limit<br>Use freely for 1 month until credits run out</td>
+            <td class="con">Credits are finite — limited to your balance</td>
+          </tr>
+          <tr>
+            <td class="plan-name">Lifetime<br><span style="color:var(--muted);font-weight:400;font-size:12px">Permanent access</span></td>
+            <td class="pro">Unlimited Auto model (≈ GPT-5.2)<br>For heavy tasks, stronger models may activate automatically<br>Use on 1–2 devices<br>Early access to future tools, bots &amp; tips released by the shop</td>
+            <td class="con">Must create your own account — prepare a Hotmail or Gmail<br>Model is generally weaker than other plans<br>Risk of being patched<br>No refund</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note-block">
+        <strong>Recommendation:</strong> If you want to use Cursor without any daily limits, go with the <strong>700–6500 credit plans</strong>. The 200-credit/day plan is best for light, casual use.
+      </div>
+    </div>
+
+    <!-- Final disclaimer -->
+    <div class="product-card" style="margin-top:18px;background:linear-gradient(180deg,rgba(0,212,170,.05) 0%,rgba(0,212,170,.02) 100%)">
+      <h4>Commitment</h4>
+      <ul>
+        <li>The shop is transparent about what you are getting — please read the full description above before purchasing so there are no surprises.</li>
+        <li>The shop guarantees the service delivered matches the description, and provides long-term support for all active customers.</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
 <!-- ============== BEFORE YOU START ============== -->
 <section id="before-you-start">
