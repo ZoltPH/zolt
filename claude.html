@@ -362,8 +362,8 @@
 <header class="hero">
   <div class="wrap">
     <div class="eyebrow"><span class="dot"></span> SETUP GUIDE</div>
-    <h1>Claude <span>Code</span></h1>
-    <p class="lede">Install, configure, and run Claude Code from your terminal — plus answers to the questions that come up most.</p>
+    <h1>Claude <span>Setup</span></h1>
+    <p class="lede">Set up Claude Code from your terminal, then connect Claude Desktop (Cowork) to UniversalAI Gateway with your own API key.</p>
 
     <div class="terminal">
       <div class="terminal-bar">
@@ -468,9 +468,98 @@ curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del in
   </div>
 </section>
 
+
+<section id="cowork">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num">04</span><h2>Claude Desktop / Cowork</h2></div>
+    <p class="section-sub">Connect the official Claude Desktop app (Cowork) to UniversalAI Gateway using your API key and Third-Party Inference.</p>
+
+    <div class="usage-note" style="margin-top:0; margin-bottom:24px;">
+      <span class="icon">!</span>
+      <span><strong>Prerequisite:</strong> Configure Claude Code through the CLI first, then send one message in chat to activate the key before configuring Claude Desktop.</span>
+    </div>
+
+    <h3>Before you begin</h3>
+    <p>Once your order is complete, you will receive an API key. Keep this key available—you will need it when configuring the Gateway connection.</p>
+
+    <h3>Step 1 — Download Claude Desktop</h3>
+    <p>Download the official Claude Desktop app from the link below, choose the version for your operating system, and install it normally.</p>
+
+    <div class="usage-note">
+      <span class="icon">→</span>
+      <span><a href="https://claude.com/download" target="_blank" rel="noopener">Download Claude Desktop</a> — available for macOS and Windows.</span>
+    </div>
+
+    <h3>Step 2 — Enable Developer Mode</h3>
+    <p>After installing and opening Claude Desktop, enable Developer Mode so you can access the advanced configuration options.</p>
+
+    <div class="path-note">
+      <b>Menu:</b> Help → Troubleshooting → Enable Developer Mode
+    </div>
+
+    <p>After Developer Mode is enabled, Claude Desktop will automatically reload. Wait until the restart has completely finished before continuing.</p>
+
+    <h3>Step 3 — Open Third-Party Inference</h3>
+    <p>Once Claude has reloaded, a new <strong>Developer</strong> menu will appear.</p>
+
+    <div class="path-note">
+      <b>Menu:</b> Developer → Configure Third-Party Inference...
+    </div>
+
+    <p>This is where you configure Claude Desktop to connect to UniversalAI Gateway.</p>
+
+    <h3>Step 4 — Configure the Gateway</h3>
+    <p>In the configuration window, find <strong>Connection</strong> and select <strong>Gateway</strong>. Enter the following values:</p>
+
+    <div class="table-scroll">
+      <table style="min-width: 0;">
+        <thead>
+          <tr><th>Field</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Gateway base URL</td>
+            <td><code>https://api.ccpro.cn</code></td>
+          </tr>
+          <tr>
+            <td>Gateway API key</td>
+            <td>Enter your API key</td>
+          </tr>
+          <tr>
+            <td>Gateway auth schema</td>
+            <td><code>x-api-key</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="usage-note">
+      <span class="icon">→</span>
+      <span>After entering all three values, click <strong>Apply locally</strong>. Claude Desktop will reload to apply the new configuration. Wait for the reload to finish.</span>
+    </div>
+
+    <h3>Step 5 — Continue with Gateway</h3>
+    <p>After Claude Desktop reloads, the app will display an option to sign in or connect through the Gateway.</p>
+
+    <div class="path-note">
+      <b>Select:</b> Continue with Gateway
+    </div>
+
+    <p>This allows Claude Desktop to use UniversalAI Gateway as its inference gateway.</p>
+
+    <h3>Step 6 — Finish and start using Claude</h3>
+    <p>Once these steps are complete, Claude Desktop (Cowork) is successfully connected to UniversalAI Gateway.</p>
+
+    <div class="usage-note">
+      <span class="icon">✓</span>
+      <span>You can now use Cowork normally. All requests will be sent through the Gateway you configured.</span>
+    </div>
+  </div>
+</section>
+
 <section id="faq">
   <div class="wrap">
-    <div class="section-head"><span class="section-num">04</span><h2>Troubleshooting</h2></div>
+    <div class="section-head"><span class="section-num">05</span><h2>Troubleshooting</h2></div>
     <p class="section-sub">Common questions after setup.</p>
 
     <div class="faq-item open">
@@ -508,7 +597,7 @@ curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del in
 
 <footer>
   <div class="wrap">
-    <p>CLAUDE CODE — SETUP GUIDE</p>
+    <p>CLAUDE — CODE &amp; COWORK SETUP GUIDE</p>
   </div>
 </footer>
 
