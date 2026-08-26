@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZOLT PH — AI subscriptions, priced for the Philippines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0c12;
+    --bg-raised: #12151e;
+    --card: #14171f;
+    --hairline: #23283344;
+    --hairline-solid: #262c39;
+    --gold: #f2b705;
+    --gold-dim: #a9880f;
+    --green: #4ade80;
+    --red-strike: #ef5b5b;
+    --ink: #edeae0;
+    --ink-dim: #9aa0ad;
+    --ink-faint: #5c6270;
+    --display: 'Space Grotesk', 'Inter', sans-serif;
+    --sans: 'Inter', -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans);
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+    background-image: radial-gradient(ellipse 1000px 600px at 50% -10%, rgba(242,183,5,0.08), transparent 60%);
+  }
+  @media (prefers-reduced-motion: reduce){ *{ animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important; } }
+  ::selection{ background:var(--gold); color:#0a0c12; }
+  a{ color:var(--gold); }
+  .wrap{ max-width:980px; margin:0 auto; padding:0 24px; }
+  .eyebrow{ font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-dim); }
+
+  /* ---------- NAV ---------- */
+  nav{ position:sticky; top:0; z-index:50; background:rgba(10,12,18,0.85); backdrop-filter:blur(10px); border-bottom:1px solid var(--hairline); }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; }
+  .logo{ font-family:var(--display); font-weight:700; font-size:18px; letter-spacing:-.01em; display:flex; align-items:center; gap:8px; }
+  .logo .bolt{ color:var(--gold); }
+  .nav-cta{
+    font-family:var(--sans); font-weight:600; font-size:13.5px; color:#0a0c12;
+    background:var(--gold); padding:9px 18px; border-radius:7px; text-decoration:none;
+    transition:filter .15s ease;
+  }
+  .nav-cta:hover{ filter:brightness(1.1); }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding:76px 0 40px; text-align:center; }
+  .hero h1{
+    font-family:var(--display); font-weight:700; font-size:clamp(32px,5.5vw,54px);
+    line-height:1.08; letter-spacing:-.02em; margin:20px 0 16px;
+  }
+  .hero h1 .hi{ color:var(--gold); }
+  .hero p.lede{ color:var(--ink-dim); font-size:17px; max-width:520px; margin:0 auto 34px; }
+  .hero-ctas{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:8px; }
+  .btn-primary{
+    font-family:var(--sans); font-weight:600; font-size:15px; color:#0a0c12;
+    background:var(--gold); padding:14px 26px; border-radius:8px; text-decoration:none;
+    box-shadow:0 8px 30px -8px rgba(242,183,5,0.5); transition:transform .15s ease, filter .15s ease;
+    display:inline-block;
+  }
+  .btn-primary:hover{ transform:translateY(-1px); filter:brightness(1.08); }
+  .btn-ghost{
+    font-family:var(--sans); font-weight:600; font-size:15px; color:var(--ink);
+    background:transparent; border:1px solid var(--hairline-solid); padding:13px 24px; border-radius:8px;
+    text-decoration:none; transition:border-color .15s ease;
+  }
+  .btn-ghost:hover{ border-color:var(--gold-dim); }
+
+  /* ---------- CALCULATOR (signature element) ---------- */
+  .calc-shell{ max-width:560px; margin:56px auto 0; text-align:left; }
+  .calc-card{
+    background:var(--card); border:1px solid var(--hairline-solid); border-radius:16px;
+    padding:28px 26px 24px; box-shadow:0 30px 80px -30px rgba(0,0,0,.6); position:relative; overflow:hidden;
+  }
+  .calc-card::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .calc-label{ font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:14px; }
+  .calc-row{ display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+  .calc-chip{
+    font-family:var(--sans); font-weight:600; font-size:13px; color:var(--ink-dim);
+    background:var(--bg-raised); border:1px solid var(--hairline-solid); padding:8px 14px; border-radius:20px;
+    cursor:pointer; transition:all .15s ease;
+  }
+  .calc-chip.active{ background:var(--gold); color:#0a0c12; border-color:var(--gold); }
+  .calc-slider-row{ display:flex; align-items:center; gap:14px; margin-bottom:24px; }
+  .calc-slider-row input[type=range]{ flex:1; accent-color:var(--gold); }
+  .calc-amount{ font-family:var(--mono); font-weight:600; font-size:15px; color:var(--gold); min-width:64px; text-align:right; }
+
+  .receipt{ border-top:1px dashed var(--hairline-solid); padding-top:20px; }
+  .receipt-line{ display:flex; justify-content:space-between; align-items:baseline; font-family:var(--mono); font-size:13.5px; color:var(--ink-dim); margin-bottom:10px; }
+  .receipt-line .strike{ text-decoration:line-through; color:var(--red-strike); opacity:.85; }
+  .receipt-total{ display:flex; justify-content:space-between; align-items:baseline; margin-top:16px; padding-top:16px; border-top:1px solid var(--hairline-solid); }
+  .receipt-total .tlabel{ font-family:var(--sans); font-weight:600; font-size:14px; color:var(--ink); }
+  .receipt-total .tvalue{ font-family:var(--display); font-weight:700; font-size:26px; color:var(--gold); }
+  .save-badge{
+    margin-top:14px; display:flex; align-items:center; justify-content:center; gap:8px;
+    background:rgba(74,222,128,0.1); border:1px solid rgba(74,222,128,0.3); color:var(--green);
+    font-family:var(--mono); font-weight:600; font-size:13.5px; padding:10px; border-radius:8px;
+  }
+
+  /* ---------- TRUST STRIP ---------- */
+  .trust{ padding:36px 0; border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); }
+  .trust .wrap{ display:flex; gap:36px; justify-content:center; flex-wrap:wrap; }
+  .trust-item{ display:flex; align-items:center; gap:10px; font-size:13.5px; color:var(--ink-dim); }
+  .trust-item .ic{ color:var(--gold); font-family:var(--mono); }
+
+  /* ---------- SECTIONS ---------- */
+  section{ padding:72px 0; }
+  .section-head{ text-align:center; max-width:560px; margin:0 auto 44px; }
+  .section-head h2{ font-family:var(--display); font-weight:700; font-size:clamp(24px,4vw,32px); margin:12px 0 10px; letter-spacing:-.01em; }
+  .section-head p{ color:var(--ink-dim); font-size:15px; margin:0; }
+
+  /* ---------- COMPARISON TABLE ---------- */
+  .compare-tabs{ display:flex; gap:6px; justify-content:center; margin-bottom:28px; flex-wrap:wrap; }
+  .compare-tab{
+    font-family:var(--mono); font-size:12.5px; background:var(--bg-raised); border:1px solid var(--hairline-solid);
+    color:var(--ink-dim); padding:8px 16px; border-radius:20px; cursor:pointer; transition:all .15s ease;
+  }
+  .compare-tab.active{ background:var(--gold); color:#0a0c12; border-color:var(--gold); }
+  .compare-panel{ display:none; }
+  .compare-panel.active{ display:block; }
+  .table-scroll{ border:1px solid var(--hairline-solid); border-radius:12px; overflow:hidden; overflow-x:auto; }
+  table{ width:100%; border-collapse:collapse; min-width:560px; }
+  thead th{
+    font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint);
+    text-align:left; padding:13px 18px; background:var(--bg-raised); border-bottom:1px solid var(--hairline-solid);
+  }
+  thead th.num{ text-align:right; }
+  tbody td{ padding:14px 18px; border-bottom:1px solid var(--hairline); font-size:14px; }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover{ background:rgba(242,183,5,0.03); }
+  td.plan{ font-weight:600; color:var(--ink); }
+  td.num{ text-align:right; font-family:var(--mono); }
+  td.official{ color:var(--red-strike); text-decoration:line-through; opacity:.8; }
+  td.zolt{ color:var(--gold); font-weight:700; }
+  td.save{ color:var(--green); font-weight:600; }
+  .fx-note{ text-align:center; font-family:var(--mono); font-size:11.5px; color:var(--ink-faint); margin-top:16px; }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .step{ background:var(--card); border:1px solid var(--hairline-solid); border-radius:14px; padding:26px 22px; }
+  .step .snum{ font-family:var(--mono); color:var(--gold-dim); font-size:12px; letter-spacing:.06em; }
+  .step h3{ font-family:var(--display); font-size:17px; margin:12px 0 8px; }
+  .step p{ color:var(--ink-dim); font-size:14px; margin:0; }
+
+  /* ---------- FAQ ---------- */
+  .faq-item{ border-bottom:1px solid var(--hairline); }
+  .faq-item:first-child{ border-top:1px solid var(--hairline); }
+  .faq-q{
+    width:100%; background:none; border:none; display:flex; justify-content:space-between; align-items:center;
+    padding:20px 4px; cursor:pointer; text-align:left; font-family:var(--sans); font-weight:600; font-size:15px; color:var(--ink);
+  }
+  .faq-q .chev{ font-family:var(--mono); color:var(--ink-faint); transition:transform .2s ease; flex-shrink:0; margin-left:16px; }
+  .faq-item.open .chev{ transform:rotate(45deg); }
+  .faq-a{ max-height:0; overflow:hidden; transition:max-height .25s ease; }
+  .faq-item.open .faq-a{ max-height:200px; }
+  .faq-a p{ color:var(--ink-dim); font-size:14.5px; padding:0 4px 20px; margin:0; }
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{ text-align:center; padding:80px 0; border-top:1px solid var(--hairline); }
+  .final-cta h2{ font-family:var(--display); font-weight:700; font-size:clamp(26px,4.5vw,38px); margin:0 0 14px; }
+  .final-cta p{ color:var(--ink-dim); margin:0 0 30px; }
+
+  footer{ text-align:center; padding:36px 0; border-top:1px solid var(--hairline); }
+  footer p{ font-family:var(--mono); font-size:11.5px; color:var(--ink-faint); }
+
+  @media (max-width:720px){
+    .steps{ grid-template-columns:1fr; }
+    .hero{ padding:56px 0 32px; }
+    section{ padding:52px 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo"><span class="bolt">⚡</span>ZOLT PH</div>
+    <a class="nav-cta" href="https://t.me/ZoltXBot" target="_blank" rel="noopener">Open bot</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">CURSOR · CLAUDE · CODEX</div>
+    <h1>Stop paying <span class="hi">US-dollar</span><br>prices for AI tools.</h1>
+    <p class="lede">Genuine subscriptions and top-ups, sold in pesos, delivered through a Telegram bot — usually the same price as a fast-food meal, not a plane ticket.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="https://t.me/ZoltXBot" target="_blank" rel="noopener">Get started — @ZoltXBot</a>
+      <a class="btn-ghost" href="#compare">See the price difference</a>
+    </div>
+
+    <div class="calc-shell">
+      <div class="calc-card">
+        <div class="calc-label">Savings calculator</div>
+        <div class="calc-row" id="productChips">
+          <div class="calc-chip active" data-product="codex">Codex</div>
+          <div class="calc-chip" data-product="claude">Claude</div>
+          <div class="calc-chip" data-product="cursor">Cursor</div>
+        </div>
+        <div class="calc-slider-row">
+          <input type="range" id="tierSlider" min="0" max="4" step="1" value="0">
+          <div class="calc-amount" id="tierLabel">$10</div>
+        </div>
+        <div class="receipt">
+          <div class="receipt-line"><span>Official price (direct, at today's forex)</span><span class="strike" id="officialPrice">₱617</span></div>
+          <div class="receipt-line"><span>ZOLT PH price</span><span id="zoltPrice" style="color:var(--gold);font-weight:600">₱99</span></div>
+          <div class="receipt-total"><span class="tlabel">You save</span><span class="tvalue" id="savedAmount">₱518</span></div>
+        </div>
+        <div class="save-badge">🔥 <span id="savedPercent">84% cheaper</span> than buying it yourself</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="trust">
+  <div class="wrap">
+    <div class="trust-item"><span class="ic">⚡</span> Usually delivered in minutes</div>
+    <div class="trust-item"><span class="ic">💳</span> Wallet + order history in-bot</div>
+    <div class="trust-item"><span class="ic">🛟</span> Real support if something's wrong</div>
+  </div>
+</div>
+
+<section id="compare">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">THE MATH</div>
+      <h2>Official price vs. ZOLT PH</h2>
+      <p>"Official" = converting the plan's face value at today's market USD→PHP rate — what you'd actually pay buying it yourself, before any card forex fees.</p>
+    </div>
+
+    <div class="compare-tabs" id="compareTabs">
+      <div class="compare-tab active" data-panel="codex">Codex</div>
+      <div class="compare-tab" data-panel="claude">Claude</div>
+      <div class="compare-tab" data-panel="cursor">Cursor</div>
+    </div>
+
+    <div class="compare-panel active" id="panel-codex">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Plan</th><th class="num">Official</th><th class="num">ZOLT PH</th><th class="num">You save</th></tr></thead>
+          <tbody>
+            <tr><td class="plan">$10 Month</td><td class="num official">₱617</td><td class="num zolt">₱99</td><td class="num save">84%</td></tr>
+            <tr><td class="plan">$20 Month</td><td class="num official">₱1,234</td><td class="num zolt">₱189</td><td class="num save">85%</td></tr>
+            <tr><td class="plan">$50 Month</td><td class="num official">₱3,085</td><td class="num zolt">₱449</td><td class="num save">85%</td></tr>
+            <tr><td class="plan">$100 Month</td><td class="num official">₱6,170</td><td class="num zolt">₱749</td><td class="num save">88%</td></tr>
+            <tr><td class="plan">$500 Month 🔥</td><td class="num official">₱30,850</td><td class="num zolt">₱2,799</td><td class="num save">91%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="compare-panel" id="panel-claude">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Plan</th><th class="num">Official</th><th class="num">ZOLT PH</th><th class="num">You save</th></tr></thead>
+          <tbody>
+            <tr><td class="plan">$10 Month</td><td class="num official">₱617</td><td class="num zolt">₱99</td><td class="num save">84%</td></tr>
+            <tr><td class="plan">$50 Month</td><td class="num official">₱3,085</td><td class="num zolt">₱449</td><td class="num save">85%</td></tr>
+            <tr><td class="plan">$500 Month 🔥</td><td class="num official">₱30,850</td><td class="num zolt">₱2,799</td><td class="num save">91%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="compare-panel" id="panel-cursor">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Plan</th><th class="num">Official</th><th class="num">ZOLT PH</th><th class="num">You save</th></tr></thead>
+          <tbody>
+            <tr><td class="plan">Monthly Pass (vs. Cursor Pro, $20/mo)</td><td class="num official">₱1,234</td><td class="num zolt">₱750</td><td class="num save">39%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="color:var(--ink-faint); font-size:13px; margin-top:14px;">Cursor's daily / weekly / quota passes don't map to an official plan 1:1 — they're usage-based options only available through ZOLT PH.</p>
+    </div>
+
+    <p class="fx-note">USD→PHP ≈ 61.7 · rates fluctuate daily — treat this as directional, not exact</p>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">HOW IT WORKS</div>
+      <h2>Three steps, no forms</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="snum">01</div><h3>Open the bot</h3><p>Tap through to @ZoltXBot on Telegram — no signup, no separate account to create.</p></div>
+      <div class="step"><div class="snum">02</div><h3>Pick a plan</h3><p>Browse Cursor, Claude, or Codex, choose the size that fits, and pay in the bot.</p></div>
+      <div class="step"><div class="snum">03</div><h3>Get access</h3><p>Delivered straight to your wallet in the bot — usually within minutes.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">QUESTIONS</div>
+      <h2>Before you buy</h2>
+    </div>
+
+    <div class="faq-item open">
+      <button class="faq-q">Is this legit?<span class="chev">+</span></button>
+      <div class="faq-a"><p>Yes — every plan sold is a genuine subscription or top-up, not a shared or cracked account. Orders, wallet balance, and support are all handled inside the Telegram bot so there's a record of everything.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">How is it this much cheaper?<span class="chev">+</span></button>
+      <div class="faq-a"><p>Bulk purchasing and no card-network forex markup — the same reason buying in bulk almost always costs less per unit than buying one at a time.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">How fast is delivery?<span class="chev">+</span></button>
+      <div class="faq-a"><p>Usually within minutes of payment confirming. You can track order status directly in the bot.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">What if something goes wrong?<span class="chev">+</span></button>
+      <div class="faq-a"><p>Message Support inside the bot — a real person handles it, not an auto-reply loop.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="final-cta">
+  <div class="wrap">
+    <h2>Your next AI subscription costs less than lunch.</h2>
+    <p>Cursor, Claude, and Codex — priced for the Philippines.</p>
+    <a class="btn-primary" href="https://t.me/ZoltXBot" target="_blank" rel="noopener">Open @ZoltXBot →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap"><p>ZOLT PH · CHARGED. DELIVERED. DONE.</p></div>
+</footer>
+
+<script>
+  // ---- Savings calculator ----
+  const data = {
+    codex: [
+      {label:'$10', official:617, zolt:99},
+      {label:'$20', official:1234, zolt:189},
+      {label:'$50', official:3085, zolt:449},
+      {label:'$100', official:6170, zolt:749},
+      {label:'$500', official:30850, zolt:2799},
+    ],
+    claude: [
+      {label:'$10', official:617, zolt:99},
+      {label:'$50', official:3085, zolt:449},
+      {label:'$500', official:30850, zolt:2799},
+    ],
+    cursor: [
+      {label:'Monthly', official:1234, zolt:750},
+    ],
+  };
+  let currentProduct = 'codex';
+  const slider = document.getElementById('tierSlider');
+  const tierLabel = document.getElementById('tierLabel');
+  const officialEl = document.getElementById('officialPrice');
+  const zoltEl = document.getElementById('zoltPrice');
+  const savedEl = document.getElementById('savedAmount');
+  const savedPctEl = document.getElementById('savedPercent');
+
+  function peso(n){ return '₱' + n.toLocaleString('en-PH'); }
+
+  function renderCalc(){
+    const tiers = data[currentProduct];
+    slider.max = tiers.length - 1;
+    if (parseInt(slider.value) >= tiers.length) slider.value = 0;
+    const t = tiers[parseInt(slider.value)];
+    tierLabel.textContent = t.label;
+    officialEl.textContent = peso(t.official);
+    zoltEl.textContent = peso(t.zolt);
+    const saved = t.official - t.zolt;
+    const pct = Math.round((saved / t.official) * 100);
+    savedEl.textContent = peso(saved);
+    savedPctEl.textContent = pct + '% cheaper';
+  }
+
+  document.querySelectorAll('#productChips .calc-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('#productChips .calc-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      currentProduct = chip.dataset.product;
+      slider.value = 0;
+      renderCalc();
+    });
+  });
+  slider.addEventListener('input', renderCalc);
+  renderCalc();
+
+  // ---- Comparison tabs ----
+  document.querySelectorAll('#compareTabs .compare-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('#compareTabs .compare-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.compare-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+    });
+  });
+
+  // ---- FAQ ----
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+  });
+</script>
+
+</body>
+</html>
