@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codex — Setup Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0b1210;
+    --bg-raised: #101c19;
+    --bg-code: #08100e;
+    --hairline: #1c332c;
+    --cyan: #4ee6c8;
+    --cyan-dim: #2f9a86;
+    --cyan-faint: #1c4a41;
+    --paper: #e7f4f0;
+    --paper-dim: #9fb8b1;
+    --paper-faint: #62766f;
+    --amber-warn: #e6b64e;
+    --red-warn: #e66a5a;
+    --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    --sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse 900px 500px at 85% -10%, rgba(78,230,200,0.07), transparent 60%),
+      repeating-linear-gradient(180deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px);
+    color: var(--paper);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  }
+
+  ::selection{ background: var(--cyan); color: #0b1210; }
+
+  a{ color: var(--cyan); text-decoration: none; border-bottom: 1px solid var(--cyan-faint); transition: border-color .15s ease; }
+  a:hover{ border-color: var(--cyan); }
+  a:focus-visible, button:focus-visible, .tab:focus-visible{ outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+  .wrap{ max-width: 860px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    padding: 96px 0 40px;
+    border-bottom: 1px solid var(--hairline);
+    overflow: hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      linear-gradient(90deg, transparent 0, transparent calc(50% - 430px), rgba(78,230,200,0.35) calc(50% - 430px), rgba(78,230,200,0.35) calc(50% - 429px), transparent calc(50% - 429px)),
+      linear-gradient(90deg, transparent calc(50% + 429px), rgba(78,230,200,0.35) calc(50% + 429px), rgba(78,230,200,0.35) calc(50% + 430px), transparent calc(50% + 430px));
+    pointer-events:none;
+    opacity:.5;
+  }
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--cyan-dim);
+    display:flex; align-items:center; gap:10px;
+    margin-bottom: 22px;
+  }
+  .eyebrow .dot{
+    width:7px; height:7px; border-radius:50%; background: var(--cyan);
+    box-shadow: 0 0 8px var(--cyan);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{opacity:1} 50%{opacity:.35} }
+
+  .hero h1{
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: clamp(34px, 6vw, 52px);
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+    color: var(--paper);
+  }
+  .hero h1 span{ color: var(--cyan); }
+
+  .hero p.lede{
+    font-size: 17px;
+    color: var(--paper-dim);
+    max-width: 540px;
+    margin: 0 0 32px;
+  }
+
+  /* highlight list */
+  .highlights{
+    list-style: none;
+    padding: 0; margin: 0 0 40px;
+    display: grid;
+    gap: 10px;
+  }
+  .highlights li{
+    display:flex; gap: 12px;
+    font-size: 14.5px;
+    color: var(--paper-dim);
+    align-items: flex-start;
+  }
+  .highlights li .mark{
+    font-family: var(--mono);
+    color: var(--cyan);
+    flex-shrink: 0;
+  }
+  .highlights li a{ font-size: inherit; }
+
+  /* ---------- SECTIONS ---------- */
+  section{ padding: 56px 0; border-bottom: 1px solid var(--hairline); }
+  section:last-of-type{ border-bottom: none; }
+
+  .section-head{ display:flex; align-items:baseline; gap:14px; margin-bottom: 8px; }
+  .section-num{ font-family: var(--mono); font-size: 13px; color: var(--cyan-dim); }
+  h2{ font-family: var(--mono); font-size: 22px; font-weight: 600; margin: 0; color: var(--paper); letter-spacing: -0.01em; }
+  .section-sub{ color: var(--paper-faint); font-size: 14.5px; margin: 0 0 32px; max-width: 560px; }
+
+  h3{ font-family: var(--sans); font-weight: 600; font-size: 15px; color: var(--cyan); margin: 34px 0 12px; letter-spacing: .01em; }
+  h3:first-of-type{ margin-top: 0; }
+
+  p{ color: var(--paper-dim); font-size: 15px; }
+
+  .link-row{ display:flex; gap: 18px; flex-wrap: wrap; margin: 4px 0 22px; }
+
+  /* ---------- OS TABS ---------- */
+  .tabs{ display:flex; gap: 4px; border-bottom: 1px solid var(--hairline); }
+  .tab{
+    font-family: var(--mono); font-size: 13px; background: none; border: none;
+    color: var(--paper-faint); padding: 10px 16px; cursor: pointer;
+    border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .15s ease;
+  }
+  .tab:hover{ color: var(--paper); }
+  .tab[aria-selected="true"]{ color: var(--cyan); border-bottom-color: var(--cyan); }
+  .panel{ display:none; }
+  .panel.active{ display:block; }
+
+  /* ---------- CODE BLOCKS ---------- */
+  .code-block{ position: relative; background: var(--bg-code); border: 1px solid var(--hairline); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .code-block.standalone{ border-radius: 8px; margin: 0 0 16px; }
+  .code-block pre{ margin: 0; padding: 20px 52px 20px 20px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.7; color: var(--paper-dim); }
+  .code-block code .c{ color: var(--paper-faint); font-style: italic; }
+  .code-block code .k{ color: var(--cyan); }
+  .code-block code .s{ color: var(--amber-warn); }
+
+  .copy-btn{
+    position: absolute; top: 12px; right: 12px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .04em;
+    background: var(--bg-raised); border: 1px solid var(--hairline); color: var(--paper-faint);
+    padding: 6px 10px; border-radius: 5px; cursor: pointer; transition: all .15s ease;
+  }
+  .copy-btn:hover{ color: var(--cyan); border-color: var(--cyan-faint); }
+  .copy-btn.copied{ color: var(--cyan); border-color: var(--cyan); }
+
+  /* ---------- CALLOUTS ---------- */
+  .callout{ display:flex; gap: 12px; padding: 14px 16px; border-radius: 6px; margin: 18px 0; font-size: 14px; border: 1px solid; }
+  .callout .icon{ font-family: var(--mono); flex-shrink:0; }
+  .callout.warn{ background: rgba(230,182,78,0.06); border-color: rgba(230,182,78,0.3); color: var(--amber-warn); }
+  .callout.info{ background: var(--bg-raised); border-color: var(--hairline); color: var(--paper-dim); }
+  .callout code{ font-family: var(--mono); background: rgba(255,255,255,0.05); padding: 1px 5px; border-radius: 3px; }
+
+  .path-note{
+    font-family: var(--mono); font-size: 12.5px; color: var(--paper-faint);
+    background: var(--bg-raised); border: 1px solid var(--hairline); border-left: 2px solid var(--cyan-faint);
+    padding: 10px 14px; border-radius: 4px; margin: 0 0 14px;
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq-item{ border: 1px solid var(--hairline); border-radius: 8px; margin-bottom: 12px; background: var(--bg-raised); overflow: hidden; }
+  .faq-q{
+    display:flex; align-items:center; justify-content: space-between; gap: 16px; width: 100%;
+    background: none; border: none; padding: 16px 18px; cursor: pointer; text-align: left;
+    font-family: var(--sans); font-weight: 600; font-size: 14.5px; color: var(--paper);
+  }
+  .faq-q .qmark{ font-family: var(--mono); color: var(--cyan-dim); margin-right: 10px; }
+  .faq-q .chev{ font-family: var(--mono); color: var(--paper-faint); flex-shrink:0; transition: transform .2s ease; }
+  .faq-item.open .chev{ transform: rotate(45deg); }
+  .faq-a{ max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+  .faq-item.open .faq-a{ max-height: 900px; }
+  .faq-a-inner{ padding: 0 18px 20px; }
+  .faq-a-inner p{ margin: 0 0 12px; font-size: 14px; }
+  .faq-a-inner a{ font-family: var(--mono); font-size: 13.5px; }
+  .faq-a-inner ol{ margin: 0 0 14px; padding-left: 20px; font-size: 14px; color: var(--paper-dim); }
+  .faq-a-inner ol li{ margin-bottom: 6px; }
+
+  /* error terminal-style box for status codes */
+  .err-box{
+    font-family: var(--mono); font-size: 12.5px; line-height: 1.6;
+    background: var(--bg-code); border: 1px solid rgba(230,106,90,0.35);
+    border-radius: 6px; padding: 14px 16px; margin: 10px 0 16px;
+    color: var(--paper-dim); overflow-x: auto;
+  }
+  .err-box .status{ color: var(--red-warn); font-weight: 600; }
+  .err-box .dim{ color: var(--paper-faint); }
+
+  .badge{
+    display:inline-block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .04em;
+    padding: 2px 8px; border-radius: 4px; margin-left: 8px; vertical-align: 2px;
+  }
+  .badge.status-400{ background: rgba(230,106,90,0.12); color: var(--red-warn); border: 1px solid rgba(230,106,90,0.3); }
+  .badge.status-401{ background: rgba(230,106,90,0.12); color: var(--red-warn); border: 1px solid rgba(230,106,90,0.3); }
+  .badge.status-503{ background: rgba(230,182,78,0.12); color: var(--amber-warn); border: 1px solid rgba(230,182,78,0.3); }
+  .badge.status-429{ background: rgba(230,182,78,0.12); color: var(--amber-warn); border: 1px solid rgba(230,182,78,0.3); }
+
+  footer{ padding: 40px 0 60px; text-align:center; }
+  footer p{ font-family: var(--mono); font-size: 12px; color: var(--paper-faint); }
+
+  @media (max-width: 600px){
+    .hero{ padding: 64px 0 32px; }
+    .wrap{ padding: 0 18px; }
+    section{ padding: 40px 0; }
+    .code-block pre{ padding: 16px 40px 16px 14px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span> SETUP GUIDE</div>
+    <h1>Cod<span>ex</span></h1>
+    <p class="lede">Install, configure, and run Codex — plus fixes for every error you're likely to hit along the way.</p>
+
+    <ul class="highlights">
+      <li><span class="mark">→</span> No VPN required to connect.</li>
+      <li><span class="mark">→</span> No account needed — enter your key and you're live immediately, no signup step.</li>
+      <li><span class="mark">→</span> OpenAI currently supports <b style="color:var(--paper)">GPT&#8209;5.4 and newer</b> models only.</li>
+      <li><span class="mark">→</span> Setting up Claude Code instead? See the <a href="claude.html">Claude Code guide</a>. For purchase questions, contact store support.</li>
+    </ul>
+  </div>
+</header>
+
+<section id="install">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num">01</span><h2>Install</h2></div>
+    <p class="section-sub">Use the desktop app, or install the CLI if you'd rather work from the terminal.</p>
+
+    <h3>Desktop app</h3>
+    <p style="margin-bottom:20px">Download and install the app directly:</p>
+    <div class="link-row">
+      <a href="#">Official download</a>
+      <a href="#">Mirror download</a>
+    </div>
+
+    <h3>CLI (optional)</h3>
+    <p>To use Codex from the command line instead, make sure <a href="https://nodejs.org" target="_blank" rel="noopener">Node.js</a> is installed first, then run:</p>
+    <div class="code-block standalone">
+      <button class="copy-btn" data-copy="npm install -g @openai/codex">Copy</button>
+      <pre><code><span class="c"># 1. Install globally</span>
+npm install -g @openai/codex</code></pre>
+    </div>
+    <div class="code-block standalone">
+      <button class="copy-btn" data-copy="codex --version">Copy</button>
+      <pre><code><span class="c"># 2. Confirm the install worked — a version number means you're set</span>
+codex --version</code></pre>
+    </div>
+  </div>
+</section>
+
+<section id="configure">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num">02</span><h2>Configure</h2></div>
+    <p class="section-sub">Run the install command for your platform, then paste in your API key when prompted.</p>
+
+    <div class="tabs" role="tablist" aria-label="Operating system">
+      <button class="tab" role="tab" aria-selected="true" data-panel="mac">macOS / Linux</button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="ps">Windows PowerShell</button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="cmd">Windows CMD</button>
+    </div>
+
+    <div class="panel active" id="panel-mac">
+      <div class="code-block">
+        <button class="copy-btn" data-copy="curl -fsSL https://ccpro.cn/install/codex/codex-config-api.sh | bash">Copy</button>
+        <pre><code><span class="c"># macOS / Linux</span>
+curl -fsSL https://ccpro.cn/install/codex/codex-config-api.sh | bash</code></pre>
+      </div>
+    </div>
+    <div class="panel" id="panel-ps">
+      <div class="code-block">
+        <button class="copy-btn" data-copy="irm https://ccpro.cn/install/codex/codex-config-api.ps1 | iex">Copy</button>
+        <pre><code><span class="c"># Windows PowerShell</span>
+irm https://ccpro.cn/install/codex/codex-config-api.ps1 | iex</code></pre>
+      </div>
+    </div>
+    <div class="panel" id="panel-cmd">
+      <div class="code-block">
+        <button class="copy-btn" data-copy='curl -fsSL http://ccpro.cn/install/codex/codex-config-api.bat -o "%TEMP%\codex-config.bat"'>Copy</button>
+        <pre><code><span class="c"># Windows CMD</span>
+curl -fsSL http://ccpro.cn/install/codex/codex-config-api.bat -o "%TEMP%\codex-config.bat"</code></pre>
+      </div>
+    </div>
+
+    <p style="margin-top:20px">Pick the command for your platform, copy it, and press enter to run it. When you see <code style="font-family:var(--mono); background:rgba(255,255,255,.05); padding:1px 5px; border-radius:3px;">Enter your API Key</code>, paste in your purchased key (starts with <code style="font-family:var(--mono); background:rgba(255,255,255,.05); padding:1px 5px; border-radius:3px;">sk-jy-ex</code>) and press enter.</p>
+
+    <div class="callout warn">
+      <span class="icon">!</span>
+      <span>Never share your full key with anyone, and never post it publicly. If you need help verifying it, share only the <b>last six characters</b>.</span>
+    </div>
+
+    <div class="path-note">Setting up manually instead? Set <b style="color:var(--paper-dim)">base_url</b> to <code style="font-family:inherit">https://api.ccpro.cn/v1</code></div>
+
+    <h3>CC-Switch one-click import</h3>
+    <p><a href="#">CC Pro | Quick Setup</a> — recommended if you already have <code style="font-family:var(--mono); background:rgba(255,255,255,.05); padding:1px 5px; border-radius:3px;">cc-switch</code> installed.</p>
+  </div>
+</section>
+
+<section id="usage">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num">03</span><h2>Use it</h2></div>
+    <p class="section-sub">Once configuration is complete, you're ready to go.</p>
+
+    <div class="code-block standalone">
+      <button class="copy-btn" data-copy="codex">Copy</button>
+      <pre><code>codex</code></pre>
+    </div>
+    <div class="callout info">
+      <span class="icon">→</span>
+      <span>Restart the app, or run <code>codex</code> directly in your terminal, to start using it.</span>
+    </div>
+
+    <h3>Image generation</h3>
+    <p>Download the image-generation skill, then drag the zip file into the Codex chat window:</p>
+    <div class="link-row"><a href="#">ccpro-image-generator.zip</a></div>
+    <p>Send this message to the Codex client, swapping in your own key:</p>
+    <div class="code-block standalone">
+      <button class="copy-btn" data-copy="Install this skill globally in Codex, and set the IMAGE_CURL_NODE_API_KEY environment variable in this skill's .env file to [your key here].">Copy</button>
+      <pre><code>Install this skill globally in Codex, and set the
+IMAGE_CURL_NODE_API_KEY environment variable in this
+skill's .env file to <span class="k">[your key here]</span>.</code></pre>
+    </div>
+    <p>To generate an image afterward, just run <code style="font-family:var(--mono); background:rgba(255,255,255,.05); padding:1px 5px; border-radius:3px;">/ccpro-image-generator</code> in the Codex client, then describe what you want.</p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num">04</span><h2>Troubleshooting</h2></div>
+    <p class="section-sub">Common errors and what to do about each one.</p>
+
+    <div class="faq-item open">
+      <button class="faq-q"><span><span class="qmark">Q·</span>How do I check my usage?</span><span class="chev">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">
+        <p>View current usage against your key here:</p>
+        <a href="https://ccpro.cn/key-usage/" target="_blank" rel="noopener">ccpro.cn/key-usage</a>
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q"><span><span class="qmark">Q·</span>Stuck on "Reconnecting…"</span><span class="chev">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">
+        <p>This is almost always a local network issue — the server side is running normally. Try these in order:</p>
+        <ol>
+          <li>Switch to a different network</li>
+          <li>Turn on your VPN in global / TUN mode</li>
+          <li>Switch nodes, then try again</li>
+        </ol>
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q"><span><span class="qmark">Q·</span>"Encrypted content could not be verified"</span><span class="chev">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">
+        <div class="err-box"><span class="status">Failed</span> · unexpected status 400 Bad Request<br><span class="dim">{"error":{"message":"The encrypted content gAAA...V5w= could not be verified. Reason: Encrypted content could not be decrypted or parsed.","type":"invalid_request_error"}}</span></div>
+        <p><b style="color:var(--paper)">Fastest fix:</b> start a new session.</p>
+        <p>If you need to keep your existing context, this generally traces back to how session files handle certain properties across app restarts — check the community thread linked from your source for the current workaround, since the fix has moved between versions.</p>
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q"><span><span class="qmark">Q·</span>400 — "Instructions are required"<span class="badge status-400">400</span></span><span class="chev">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">
+        <p>Known upstream issue: the instructions field gets dropped when <code style="font-family:var(--mono); background:rgba(255,255,255,.05); padding:1px 5px; border-radius:3px;">context.systemPrompt</code> is undefined. Tracked in the openai-codex issue tracker — check there for the current status and workaround.</p>
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q"><span><span class="qmark">Q·</span>401 — "Incorrect API key provided"<span class="badge status-401">401</span></span><span class="chev">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">
+        <div class="err-box"><span class="status">401 Unauthorized</span><br><span class="dim">Incorrect API key provided: sk-jy-cx...</span></div>
+        <p>You'll need to run through the <a href="#configure">Configure</a> step again.</p>
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q"><span><span class="qmark">Q·</span>503 — "Service temporarily unavailable"<span class="badge status-503">503</span></span><span class="chev">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">
+        <div class="err-box"><span class="status">503 Service Unavailable</span><br><span class="dim">stream disconnected before completion: error sending request for url</span></div>
+        <p>This is a local network issue. Retry, or work through the <a href="#">Reconnecting…</a> steps above.</p>
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q"><span><span class="qmark">Q·</span>429 — "Too Many Requests"<span class="badge status-429">429</span></span><span class="chev">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">
+        <div class="err-box"><span class="status">429</span><br><span class="dim">exceeded retry limit, last status: 429 Too Many Requests</span></div>
+        <p>Check your key's remaining quota to see whether it's been used up.</p>
+      </div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q"><span><span class="qmark">Q·</span>Switching models</span><span class="chev">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">
+        <p>The model list stays in sync with OpenAI's official lineup — switch freely, whichever way is more convenient:</p>
+        <div class="code-block standalone">
+          <button class="copy-btn" data-copy="/model">Copy</button>
+          <pre><code><span class="c"># Option 1 — inside a session</span>
+/model</code></pre>
+        </div>
+        <div class="code-block standalone">
+          <button class="copy-btn" data-copy="codex -m gpt-5.5">Copy</button>
+          <pre><code><span class="c"># Option 2 — at launch</span>
+codex -m gpt-5.5</code></pre>
+        </div>
+      </div></div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>CODEX — SETUP GUIDE</p>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected','false'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      tab.setAttribute('aria-selected','true');
+      document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+    });
+  });
+
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = btn.getAttribute('data-copy');
+      navigator.clipboard.writeText(text).then(() => {
+        const original = btn.textContent;
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = original; btn.classList.remove('copied'); }, 1600);
+      });
+    });
+  });
+
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      q.parentElement.classList.toggle('open');
+    });
+  });
+</script>
+
+</body>
+</html>
